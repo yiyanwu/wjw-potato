@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
-import { Link } from 'react-router-dom'
+import { Link,withRouter } from 'react-router-dom'
 import './signup.scss'
 
 
@@ -42,7 +42,7 @@ class SignUp extends React.Component<any, SignUpState> {
                 password,
                 password_confirmation: passwordConfirmation
             })
-            console.log('成功')
+            this.props.history.push('/')
         } catch (e) {
             throw new Error(e)
         }
@@ -81,4 +81,4 @@ class SignUp extends React.Component<any, SignUpState> {
     }
 }
 
-export default SignUp
+export default withRouter(SignUp)
