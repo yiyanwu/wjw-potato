@@ -24,9 +24,7 @@ class Index extends React.Component<any,indexState> {
             const response = await axios.get('me')
             this.setState( {user: response.data})
         }catch(e){
-            if(e.response.status === 401) {
-                this.props.history.push('/login')
-            }
+            
         }
     }
 

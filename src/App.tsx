@@ -1,14 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Router, Route, Switch} from "react-router-dom";
 import Login from "./components/Login/login"
 import Index from "./components/Index/index"
 import SignUp from "./components/SignUp/signup"
+import history from "../src/config/history"
 
 class App extends React.Component{
 
   render(){
     return (
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route path="/login">
             <Login />
