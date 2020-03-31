@@ -20,12 +20,8 @@ class Index extends React.Component<any,indexState> {
     }
 
     getMe = async() =>{
-        try{
-            const response = await axios.get('me')
-            this.setState( {user: response.data})
-        }catch(e){
-            
-        }
+        const response = await axios.get('me')
+        this.setState( {user: response.data})
     }
 
     signOut = ()=> {
