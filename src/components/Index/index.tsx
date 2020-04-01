@@ -1,39 +1,59 @@
 import * as React from 'react'
-import { Button } from 'antd'
+import {  Menu, Dropdown } from 'antd'
+import { DownOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
-import {withRouter} from 'react-router-dom'
+import Todos from '../Todos/todos'
+import { withRouter } from 'react-router-dom'
+import './index.scss'
 
 interface indexState {
-    user:any
+    user: any
 }
 
-class Index extends React.Component<any,indexState> {
-    constructor(props:any) {
+class Index extends React.Component<any, indexState> {
+    constructor(props: any) {
         super(props)
         this.state = {
-            user:{}
+            user: {}
         }
     }
 
-    async UNSAFE_componentWillMount () {
+    async UNSAFE_componentWillMount() {
         await this.getMe()
     }
 
-    getMe = async() =>{
+    getMe = async () => {
         const response = await axios.get('me')
-        this.setState( {user: response.data})
+        this.setState({ user: response.data })
     }
 
-    signOut = ()=> {
-        localStorage.setItem('x-token','')
+    signOut = () => {
+        localStorage.setItem('x-token', '')
         this.props.history.push('/login')
     }
+
+    menu = (
+        <Menu>
+            <Menu.Item key="1"><SettingOutlined/>设置</Menu.Item>
+            <Menu.Item key="2" onClick={this.signOut}><LogoutOutlined/>登出</Menu.Item>
+        </Menu>
+    );
+
     
-    render(){
+    render() {
         return (
-            <div className="Index">
-                <p>欢迎 {this.state.user.account}</p>
-                <Button onClick={this.signOut}>登出</Button>
+            <div className="Index" id="Index">
+                <header>
+                    <span className="Logo">LOGO</span>
+                    <Dropdown overlay={this.menu} trigger={['click']}>
+                        <span className="User">
+                            {this.state.user.account} <DownOutlined style={{ marginLeft: 8 }}/>
+                        </span>
+                    </Dropdown>
+                </header>
+                <main>
+                    <Todos />
+                </main>
             </div>
         )
     }
