@@ -5,7 +5,9 @@ interface todoItemProps {
     id:number,
     description: string,
     completed:boolean,
-    update:(id:number,params:any) => void
+    editing:boolean,
+    update:(id:number,params:any) => void,
+    isEditing:(id:number) => void
 }
 
 class todoItem extends React.Component<any, todoItemProps> {
@@ -17,6 +19,10 @@ class todoItem extends React.Component<any, todoItemProps> {
         this.props.update(this.props.id,params)
     }
 
+    isEditing = () => { 
+        this.props.isEditing(this.props.id)
+    }
+
     render () {
         return (
             <div className="todoItem" id="todoItem">
@@ -24,7 +30,11 @@ class todoItem extends React.Component<any, todoItemProps> {
                 checked={this.props.completed} 
                 onChange={e => this.update({completed:e.target.checked})}   
                 />
-                <span>{this.props.description}</span>
+                {
+                    this.props.editing ? 
+                    <input value={this.props.description} /> :
+                    <span onDoubleClick={this.isEditing}>{this.props.description}</span>
+                }
             </div>
         )
     }
