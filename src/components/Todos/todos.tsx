@@ -23,8 +23,6 @@ class Todos extends React.Component<any,todoState> {
         try{
             const response = await axios.post('todos', params)
             const newTodo = [response.data.resource,...todos]
-            console.log(newTodo)
-            console.log(response.data)
             this.setState({todos:newTodo})
         }catch(e){ }
     }
@@ -42,6 +40,22 @@ class Todos extends React.Component<any,todoState> {
         }
     }
      
+    updateTodo = async(id:number,params:any) => {
+        const {todos} = this.state
+        try {
+            const response = await axios.put(`todos/${id}`,params)
+            const newTodos = todos.map(t => {
+                if(id === t.id){
+                    return response.data.resource
+                } else {
+                    return t
+                }
+            })
+            this.setState({todos:newTodos})
+        } catch (error) {
+            
+        }
+    }
 
     render () {
         return (
@@ -49,7 +63,8 @@ class Todos extends React.Component<any,todoState> {
                 <TodoInput addTodo={(params:any) => this.addTodo(params)}/>
                 <main>
                     {
-                        this.state.todos.map(t => <TodoItem key={t.id} {...t}/>)
+                        this.state.todos.map(t => <TodoItem key={t.id} {...t}
+                            update={this.updateTodo}/>)
                     }
                 </main>
             </div>
