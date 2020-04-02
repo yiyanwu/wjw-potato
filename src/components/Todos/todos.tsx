@@ -22,7 +22,9 @@ class Todos extends React.Component<any,todoState> {
         const {todos} = this.state
         try{
             const response = await axios.post('todos', params)
-            const newTodo = [response.data.resources,...todos]
+            const newTodo = [response.data.resource,...todos]
+            console.log(newTodo)
+            console.log(response.data)
             this.setState({todos:newTodo})
         }catch(e){ }
     }
