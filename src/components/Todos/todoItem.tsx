@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Checkbox } from 'antd';
+import { EnterOutlined, DeleteFilled } from '@ant-design/icons';
 
 interface todoItemProps {
     id:number,
@@ -10,9 +11,16 @@ interface todoItemProps {
     isEditing:(id:number) => void
 }
 
-class todoItem extends React.Component<any, todoItemProps> {
+interface todoItemText {
+    itemText:string
+}
+
+class todoItem extends React.Component<todoItemProps, todoItemText> {
     constructor(props:any) {
         super(props)
+        this.state = {
+            itemText: this.props.description
+        }
     }
 
     update = (params:any) => {
@@ -23,18 +31,40 @@ class todoItem extends React.Component<any, todoItemProps> {
         this.props.isEditing(this.props.id)
     }
 
+    onkeyUp = (e:any) => {
+        if(e.keyCode === 13 && this.state.itemText !== '') {
+            this.update({description: this.state.itemText})
+        }
+    }
+
+    onClick = () => {
+        if (this.state.itemText !== '') {
+            this.update({ description: this.state.itemText })
+        }
+    }
+
     render () {
+        const editing = (
+            <div className="editing">
+                <input value={this.state.itemText} 
+                onChange={(e:any) => {this.setState({itemText:e.target.value})}}
+                onKeyUp={this.onkeyUp}/>
+                <div className="iconWrapper">
+                    <EnterOutlined onClick={this.onClick}/>
+                    <DeleteFilled onClick={(e) => {this.update({deleted:true})}}/>
+                </div>
+            </div>
+        )
+
+        const Text = <span onDoubleClick={this.isEditing}>{this.props.description}</span>
+
         return (
             <div className="todoItem" id="todoItem">
                 <Checkbox 
                 checked={this.props.completed} 
                 onChange={e => this.update({completed:e.target.checked})}   
                 />
-                {
-                    this.props.editing ? 
-                    <input value={this.props.description} /> :
-                    <span onDoubleClick={this.isEditing}>{this.props.description}</span>
-                }
+                { this.props.editing ? editing :Text }
             </div>
         )
     }
