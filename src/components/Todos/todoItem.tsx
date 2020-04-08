@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Checkbox } from 'antd';
 import { EnterOutlined, DeleteFilled } from '@ant-design/icons';
+import './todoItem.scss'
 
 interface todoItemProps {
     id:number,
@@ -56,7 +57,7 @@ class todoItem extends React.Component<todoItemProps, todoItemText> {
             </div>
         )
 
-        const Text = <span onDoubleClick={this.isEditing}>{this.props.description}</span>
+        const Text = <span className="text" onDoubleClick={this.isEditing}>{this.props.description}</span>
 
         return (
             <div className="todoItem" id="todoItem">
