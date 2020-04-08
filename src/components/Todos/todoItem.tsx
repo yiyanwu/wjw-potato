@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Checkbox } from 'antd';
 import { EnterOutlined, DeleteFilled } from '@ant-design/icons';
+import classNames from 'classnames'
 import './todoItem.scss'
 
 interface todoItemProps {
@@ -55,12 +56,18 @@ class todoItem extends React.Component<todoItemProps, todoItemText> {
                     <DeleteFilled onClick={(e) => {this.update({deleted:true})}}/>
                 </div>
             </div>
-        )
+        );
+        
+        const Text = <span className="text" onDoubleClick={this.isEditing}>{this.props.description}</span>;
 
-        const Text = <span className="text" onDoubleClick={this.isEditing}>{this.props.description}</span>
+        const todoItemClass = classNames({
+            todoItem:true,
+            editing:this.props.editing,
+            completed:this.props.completed
+        })
 
         return (
-            <div className="todoItem" id="todoItem">
+            <div className={todoItemClass} id="todoItem">
                 <Checkbox 
                 checked={this.props.completed} 
                 onChange={e => this.update({completed:e.target.checked})}   

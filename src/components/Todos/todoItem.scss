@@ -1,17 +1,18 @@
 #todoItem {
-   padding: 8px 0;
+   padding: 8px ;
    border-bottom: 1px solid #DDD;
    display: flex;
    align-items: center;
    &:hover { background: #f9f9f9;}
    &.editing { background: #fff3d2;}
+   &.completed {text-decoration: line-through; color: #DDD;}
    > .text { padding: 0 8px ; }
    > .editing{
        flex: 1;
        display: flex;
        justify-content: space-between;
        align-items: center;
-       >input { padding: 0 8px; border: 0; outline: none; }
-       >.iconWrapper >span { padding-left: 12px; } 
+       >input { padding: 0 8px; border: 0; outline: none; background: transparent;}
+       >.iconWrapper >span { padding-left: 12px; cursor: pointer;} 
    } 
 }
