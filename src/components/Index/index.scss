@@ -2,13 +2,15 @@
     max-width: 1000px;
     margin: 0 auto;
     >header {
-        padding: 16px;
+        padding: 16px 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid #DDD;
-        >.User {
-            cursor: pointer;
-        }
+        >.User {cursor: pointer;}
+    }>main {
+        padding: 16px 0; 
+        display: flex; 
+        justify-content: space-between;
     }
 }

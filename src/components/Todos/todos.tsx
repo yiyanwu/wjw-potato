@@ -16,7 +16,17 @@ class Todos extends React.Component<any,todoState> {
         }
     }
 
+    get unDeletedTodos () {
+        return this.state.todos.filter(t => !t.deleted)
+    }
 
+    get unCompletedTodos () {
+        return this.unDeletedTodos.filter(t => !t.completed)
+    }
+
+    get completedTodos() {
+        return this.unDeletedTodos.filter(t => t.completed)
+    }
 
     addTodo = async(params:any) => {
         const {todos} = this.state
@@ -24,7 +34,7 @@ class Todos extends React.Component<any,todoState> {
             const response = await axios.post('todos', params)
             const newTodo = [response.data.resource,...todos]
             this.setState({todos:newTodo})
-        }catch(e){ }
+        } catch (e) { throw new Error(e) }
     }
 
     componentDidMount() {
@@ -36,9 +46,7 @@ class Todos extends React.Component<any,todoState> {
             const response = await axios.get('todos')
             const todos = response.data.resources.map((t:any) =>Object.assign({},t,{editing:false}))
             this.setState({todos:todos})
-        } catch (e) {
-            
-        }
+        } catch (e) {throw new Error(e)}
     }
      
     updateTodo = async(id:number,params:any) => {
@@ -74,13 +82,18 @@ class Todos extends React.Component<any,todoState> {
         return (
             <div className="Todos" id="Todos">
                 <TodoInput addTodo={(params:any) => this.addTodo(params)}/>
-                <main>
+                <div className="todoLists">
                     {
-                        this.state.todos.map(t => <TodoItem key={t.id} {...t}
+                        this.unCompletedTodos.map(t => <TodoItem key={t.id} {...t}
                         update={this.updateTodo}
                         isEditing={this.isEditing}/>)
                     }
-                </main>
+                    {
+                        this.completedTodos.map(t => <TodoItem key={t.id} {...t}
+                            update={this.updateTodo}
+                            isEditing={this.isEditing} />)
+                    }
+                </div>
             </div>
         )
     }
