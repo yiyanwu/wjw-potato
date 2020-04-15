@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { connect } from 'react-redux';
+import {addTodo} from '../../redux/actions'
 import TodoInput from './todoInput'
 import TodoItem from './todoItem'
 import axios from '../../config/axios'
@@ -81,7 +83,7 @@ class Todos extends React.Component<any,todoState> {
     render () {
         return (
             <div className="Todos" id="Todos">
-                <TodoInput addTodo={(params:any) => this.addTodo(params)}/>
+                <TodoInput/>
                 <div className="todoLists">
                     {
                         this.unCompletedTodos.map(t => <TodoItem key={t.id} {...t}
@@ -99,4 +101,13 @@ class Todos extends React.Component<any,todoState> {
     }
 }
 
-export default Todos
+const mapStateToProps = (state: { todos: any; }, ownProps: any) => ({
+    todos: state.todos,
+    ...ownProps
+})
+
+const mapDispatchToProps = {
+    addTodo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todos)

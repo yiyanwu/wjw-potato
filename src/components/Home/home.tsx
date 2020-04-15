@@ -4,13 +4,13 @@ import { DownOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons
 import axios from '../../config/axios'
 import Todos from '../Todos/todos'
 import { withRouter } from 'react-router-dom'
-import './index.scss'
+import './home.scss'
 
 interface indexState {
     user: any
 }
 
-class Index extends React.Component<any, indexState> {
+class Home extends React.Component<any, indexState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -42,7 +42,7 @@ class Index extends React.Component<any, indexState> {
     
     render() {
         return (
-            <div className="Index" id="Index">
+            <div className="Home" id="Home">
                 <header>
                     <span className="Logo">LOGO</span>
                     <Dropdown overlay={this.menu} trigger={['click']}>
@@ -59,4 +59,4 @@ class Index extends React.Component<any, indexState> {
     }
 }
 
-export default withRouter(Index)
+export default withRouter(Home)
