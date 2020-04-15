@@ -1,6 +1,9 @@
 import * as React from 'react'
+import { connect } from 'react-redux';
+import { editTodo, updateTodo } from '../../redux/actions'
 import { Checkbox } from 'antd';
 import { EnterOutlined, DeleteFilled } from '@ant-design/icons';
+import axios from '../../config/axios'
 import classNames from 'classnames'
 import './todoItem.scss'
 
@@ -9,8 +12,8 @@ interface todoItemProps {
     description: string,
     completed:boolean,
     editing:boolean,
-    update:(id:number,params:any) => void,
-    isEditing:(id:number) => void
+    updateTodo:(payload:any) => any,
+    editTodo:(id:number) => any
 }
 
 interface todoItemText {
@@ -25,23 +28,28 @@ class todoItem extends React.Component<todoItemProps, todoItemText> {
         }
     }
 
-    update = (params:any) => {
-        this.props.update(this.props.id,params)
+    updateTodo = async (params: any) => {
+        try {
+            const response = await axios.put(`todos/${this.props.id}`, params)
+            this.props.updateTodo(response.data.resource)
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 
-    isEditing = () => { 
-        this.props.isEditing(this.props.id)
+    editTodo = () => { 
+        this.props.editTodo(this.props.id)
     }
 
     onkeyUp = (e:any) => {
         if(e.keyCode === 13 && this.state.itemText !== '') {
-            this.update({description: this.state.itemText})
+            this.updateTodo({description: this.state.itemText})
         }
     }
 
     onClick = () => {
         if (this.state.itemText !== '') {
-            this.update({ description: this.state.itemText })
+            this.updateTodo({ description: this.state.itemText })
         }
     }
 
@@ -53,12 +61,12 @@ class todoItem extends React.Component<todoItemProps, todoItemText> {
                 onKeyUp={this.onkeyUp}/>
                 <div className="iconWrapper">
                     <EnterOutlined onClick={this.onClick}/>
-                    <DeleteFilled onClick={(e) => {this.update({deleted:true})}}/>
+                    <DeleteFilled onClick={(e) => { this.updateTodo({deleted:true})}}/>
                 </div>
             </div>
         );
         
-        const Text = <span className="text" onDoubleClick={this.isEditing}>{this.props.description}</span>;
+        const Text = <span className="text" onDoubleClick={this.editTodo}>{this.props.description}</span>;
 
         const todoItemClass = classNames({
             todoItem:true,
@@ -70,7 +78,7 @@ class todoItem extends React.Component<todoItemProps, todoItemText> {
             <div className={todoItemClass} id="todoItem">
                 <Checkbox 
                 checked={this.props.completed} 
-                onChange={e => this.update({completed:e.target.checked})}   
+                    onChange={e => this.updateTodo({completed:e.target.checked})}   
                 />
                 { this.props.editing ? editing :Text }
             </div>
@@ -79,4 +87,13 @@ class todoItem extends React.Component<todoItemProps, todoItemText> {
 
 }
 
-export default todoItem
+const mapStateToProps = (state: { todos: any; }, ownProps: any) => ({
+    ...ownProps
+})
+
+const mapDispatchToProps = {
+    editTodo, 
+    updateTodo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(todoItem)

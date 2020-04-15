@@ -13,12 +13,14 @@ export default function (state = [],action:any) {
                 }else{ return t }
             })
         case EDIT_TODOS:
-            state.forEach((t:any) => {
+            return state.map((t:any) => {
                 if(t.id === action.payload){
-                    t.editing = true
-                }else { t.editing = false }
+                    return Object.assign({},t,{editing:true})
+                }else {
+                    return Object.assign({},t,{editing:false})
+                }
             })
-            return state
+            
         default:
             return state
     }
