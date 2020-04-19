@@ -3,6 +3,7 @@ import {  Menu, Dropdown } from 'antd'
 import { DownOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
 import Todos from '../Todos/todos'
+import Tomatoes from '../Tomatoes/tomatoes'
 import { withRouter } from 'react-router-dom'
 import './home.scss'
 
@@ -52,6 +53,7 @@ class Home extends React.Component<any, indexState> {
                     </Dropdown>
                 </header>
                 <main>
+                    <Tomatoes />
                     <Todos />
                 </main>
             </div>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux';
-import { editTodo, updateTodo } from '../../redux/actions'
+import { editTodo, updateTodo } from '../../redux/actions/todos'
 import { Checkbox } from 'antd';
 import { EnterOutlined, DeleteFilled } from '@ant-design/icons';
 import axios from '../../config/axios'
