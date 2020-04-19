@@ -29,7 +29,6 @@ class Tomatoes extends React.Component<tomatoesProps>{
         try {
             const response = await axios.get('tomatoes')
             this.props.initTomatoes(response.data.resources)
-            console.log(this.props.tomatoes)
         } catch (error) {
             throw new Error(error)
         }
