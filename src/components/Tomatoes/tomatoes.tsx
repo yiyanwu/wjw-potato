@@ -6,8 +6,9 @@ import axios from '../../config/axios'
 import './tomatoes.scss'
 
 interface tomatoesProps {
-    addTomato:(payload:any)=> any
-    tomatoes: any[]
+    addTomato:(payload:any)=> any,
+    tomatoes: any[],
+    initTomatoes: (payload:any[]) => any
 }
 
 class Tomatoes extends React.Component<tomatoesProps>{
@@ -27,7 +28,8 @@ class Tomatoes extends React.Component<tomatoesProps>{
     getTomatoes = async () => {
         try {
             const response = await axios.get('tomatoes')
-            console.log(response.data)
+            this.props.initTomatoes(response.data.resources)
+            console.log(this.props.tomatoes)
         } catch (error) {
             throw new Error(error)
         }

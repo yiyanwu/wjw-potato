@@ -16,6 +16,7 @@ class TomatoAction extends React.Component<any,tomatoActionProps> {
         return (
             <div className="TomatoAction" id="TomatoAction">
                 <Button onClick={this.props.startTomato}>开始番茄</Button>
+                <div>{this.props.unfinishedTomato && this.props.unfinishedTomato.id}</div>
             </div>
         )
     }
