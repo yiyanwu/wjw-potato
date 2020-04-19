@@ -4,3 +4,4 @@ export const UPDATE_TODOS = 'UPDATE_TODOS'
 export const EDIT_TODOS = 'EDIT_TODOS'
 
 export const ADD_TOMATO = 'ADD_TOMATO'
+export const INIT_TOMATOES = 'INIT_TOMATOES'
