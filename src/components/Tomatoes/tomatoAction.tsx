@@ -1,10 +1,12 @@
 import * as React from 'react'
-import { Button,Input } from 'antd';
+import { Button, Input } from 'antd';
+import { CloseCircleOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
 import CountDown from './countDown'
 
 interface tomatoActionProps {
     startTomato:() => void,
+    updateTomato: (payload:any)=> void,
     unfinishedTomato:any
 }
 
@@ -19,11 +21,7 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
             discription:''
         }
     }
-    
-    componentDidMount(){
-        console.log(this.props.unfinishedTomato)
-    }
-
+   
     onKeyUp = (e: any) => {
         if (e.keyCode === 13 && this.state.discription !== '') {
             this.addDiscription()
@@ -34,6 +32,7 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
         try {
             const response = await axios.put(`tomatoes/${this.props.unfinishedTomato.id}`,
             { description: this.state.discription, ended_at: new Date()})
+            this.props.updateTomato(response.data.resource)
             this.setState({discription:''})
         } catch (error) {
             throw new Error(error)
@@ -55,9 +54,11 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
                         onChange={(e:any) => {this.setState({discription:e.target.value})}}
                         onKeyUp={this.onKeyUp}
                     />
+                    <CloseCircleOutlined />
                 </div>
             }else if (timeNow - startedAt < duration){
-                html = <CountDown />
+                const timer = duration - timeNow + startedAt
+                html = <CountDown timer={timer}/>
             }
         }
 
