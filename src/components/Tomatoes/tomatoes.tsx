@@ -48,7 +48,7 @@ class Tomatoes extends React.Component<tomatoesProps>{
             <div className="Tomatoes" id="Tomatoes">
                 <TomatoAction 
                    startTomato={this.startTomato}
-                   unfinishedTomato={this.unfinishedTomato}/>
+                    unfinishedTomato={this.unfinishedTomato}/>
             </div>
         )
     }
