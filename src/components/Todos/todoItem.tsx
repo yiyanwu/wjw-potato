@@ -58,7 +58,7 @@ class todoItem extends React.Component<todoItemProps, todoItemText> {
             <div className="editing">
                 <input value={this.state.itemText} 
                 onChange={(e:any) => {this.setState({itemText:e.target.value})}}
-                onKeyUp={this.onkeyUp}/>
+                onKeyUp={this.onkeyUp} />
                 <div className="iconWrapper">
                     <EnterOutlined onClick={this.onClick}/>
                     <DeleteFilled onClick={(e) => { this.updateTodo({deleted:true})}}/>

@@ -7,13 +7,14 @@
    &:first-child {border-top: 1px solid #DDD;}
    &.editing { background: #fff3d2;}
    &.completed {text-decoration: line-through; color: #a9a9a9;}
-   > .text { padding: 0 8px ; user-select:none; width: 80%;}
+   > .text { padding: 0 8px ; user-select:none; width: 90%;}
    > .editing{
        flex: 1;
        display: flex;
        justify-content: space-between;
        align-items: center;
-       >input { padding: 0 8px; border: 0; outline: none; background: transparent;}
+       >input { padding: 0 8px; border: 0; outline: none; 
+            width: 85%; background: transparent;}
        >.iconWrapper >span { padding-left: 12px; cursor: pointer;} 
    } 
 }
