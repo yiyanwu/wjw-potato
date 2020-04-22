@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Button, Input } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
-// import CountDown from './countDown'
-import CountDownHook from './countDownHook'
+import CountDown from './countDown'
+
 
 interface tomatoActionProps {
     startTomato:() => void,
@@ -63,7 +63,7 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
                 </div>
             }else if (timeNow - startedAt < duration){
                 const timer = duration - timeNow + startedAt
-                html = <CountDownHook timer={timer} onFinish={this.onFinish}/>
+                html = <CountDown timer={timer} onFinish={this.onFinish}/>
             }
         }
 
