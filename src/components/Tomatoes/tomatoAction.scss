@@ -1,0 +1,16 @@
+#TomatoAction {
+    .countDownWrapper,.inputWrapper {
+        position: relative;
+    }
+    .abort{
+        background: #fff;
+        position: absolute;
+        right: -6px;
+        top: -6px;
+        cursor: pointer;
+    }
+    .ant-btn{
+        background: #f4f4f4;
+        width: 100%;
+    }
+}

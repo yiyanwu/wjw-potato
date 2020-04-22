@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Button, Input } from 'antd';
+import { Button, Input, Popconfirm } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
 import CountDown from './countDown'
-
+import './tomatoAction.scss'
 
 interface tomatoActionProps {
     startTomato:() => void,
@@ -25,24 +25,29 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
    
     onKeyUp = (e: any) => {
         if (e.keyCode === 13 && this.state.discription !== '') {
-            this.addDiscription()
+            this.updateTomato({ description: this.state.discription,
+                 ended_at: new Date() })
+            this.setState({ discription: '' })
         }
     }
 
     onFinish = () => {
-        this.render()
+        this.forceUpdate()
     }
 
-    addDiscription = async () => {
+    abortTomato = () => {
+        this.updateTomato({aborted:true})
+    }
+
+    updateTomato = async(params:any) => {
         try {
-            const response = await axios.put(`tomatoes/${this.props.unfinishedTomato.id}`,
-            { description: this.state.discription, ended_at: new Date()})
+            const response = await axios.put(`tomatoes/${this.props.unfinishedTomato.id}`, params)
             this.props.updateTomato(response.data.resource)
-            this.setState({discription:''})
         } catch (error) {
             throw new Error(error)
         }
     }
+
 
     render() {
         let html = <div/>
@@ -53,17 +58,38 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
             const duration = this.props.unfinishedTomato.duration
             const timeNow = new Date().getTime()
             if(timeNow - startedAt > duration){
-                html = <div>
+                html = <div className="inputWrapper">
                     <Input  placeholder="刚刚完成了什么事？"
                         value={this.state.discription}
                         onChange={(e:any) => {this.setState({discription:e.target.value})}}
                         onKeyUp={this.onKeyUp}
                     />
-                    <CloseCircleOutlined />
+                    <Popconfirm placement="bottom"
+                        onConfirm={this.abortTomato}
+                        okText="确定"
+                        cancelText="取消"
+                        title="您目前正在一个番茄工作时间中，要放弃这个番茄吗？">
+                        <CloseCircleOutlined
+                            className="abort" />
+                    </Popconfirm>
                 </div>
             }else if (timeNow - startedAt < duration){
                 const timer = duration - timeNow + startedAt
-                html = <CountDown timer={timer} onFinish={this.onFinish}/>
+                html = (
+                    <div className="countDownWrapper">
+                        <CountDown timer={timer} 
+                            duration={duration}
+                            onFinish={this.onFinish} />
+                        <Popconfirm placement="bottom"
+                            onConfirm={this.abortTomato}
+                            okText="确定"
+                            cancelText="取消"
+                            title="您目前正在一个番茄工作时间中，要放弃这个番茄吗？">
+                            <CloseCircleOutlined
+                                className="abort" />
+                        </Popconfirm>
+                    </div>
+                )
             }
         }
 

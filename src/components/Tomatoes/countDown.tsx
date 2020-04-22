@@ -1,7 +1,9 @@
 import * as React from 'react'
+import './countDown.scss'
 
 interface countDownProps {
     timer:number
+    duration:number
     onFinish:() => void
 }
 
@@ -43,10 +45,11 @@ class CountDown extends React.Component<countDownProps, countDownState> {
     }
 
     render (){
-
+        const percent = 1 - this.state.countDown/this.props.duration
         return (
             <div className="CountDown" id="CountDown">
-                {this.countDown}
+                <span className="restTime">{this.countDown}</span>
+                <div className="progress" style={{width:`${percent*100}%`}}></div>
             </div>
         )
     }
