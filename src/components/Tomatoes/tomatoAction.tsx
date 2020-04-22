@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Input, Popconfirm } from 'antd';
+import { Button, Input, Modal } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
 import CountDown from './countDown'
@@ -14,6 +14,8 @@ interface tomatoActionProps {
 interface TomatoActionState {
     discription:string
 }
+
+const { confirm } = Modal;
 
 class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState> {
     constructor(props:any) {
@@ -33,6 +35,7 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
 
     onFinish = () => {
         this.forceUpdate()
+        document.title = 'WJW 番茄土豆'
     }
 
     abortTomato = () => {
@@ -48,6 +51,19 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
         }
     }
 
+    showConfirm = ()=> {
+        confirm({
+            title: '您目前正在一个番茄工作时间中，要放弃这个番茄吗？',
+            onOk: () => {
+                this.abortTomato()
+            },
+            onCancel() {
+                console.log('取消');
+            },
+            okText: '确认',
+            cancelText: '取消'
+        });
+    }
 
     render() {
         let html = <div/>
@@ -64,14 +80,9 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
                         onChange={(e:any) => {this.setState({discription:e.target.value})}}
                         onKeyUp={this.onKeyUp}
                     />
-                    <Popconfirm placement="bottom"
-                        onConfirm={this.abortTomato}
-                        okText="确定"
-                        cancelText="取消"
-                        title="您目前正在一个番茄工作时间中，要放弃这个番茄吗？">
-                        <CloseCircleOutlined
-                            className="abort" />
-                    </Popconfirm>
+                    <CloseCircleOutlined
+                        onClick={this.showConfirm}
+                        className="abort" />
                 </div>
             }else if (timeNow - startedAt < duration){
                 const timer = duration - timeNow + startedAt
@@ -80,14 +91,9 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
                         <CountDown timer={timer} 
                             duration={duration}
                             onFinish={this.onFinish} />
-                        <Popconfirm placement="bottom"
-                            onConfirm={this.abortTomato}
-                            okText="确定"
-                            cancelText="取消"
-                            title="您目前正在一个番茄工作时间中，要放弃这个番茄吗？">
-                            <CloseCircleOutlined
-                                className="abort" />
-                        </Popconfirm>
+                        <CloseCircleOutlined
+                            onClick={this.showConfirm}
+                            className="abort" />
                     </div>
                 )
             }
