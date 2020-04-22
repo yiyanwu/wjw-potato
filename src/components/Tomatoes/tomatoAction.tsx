@@ -28,6 +28,10 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
         }
     }
 
+    onFinish = () => {
+        this.render()
+    }
+
     addDiscription = async () => {
         try {
             const response = await axios.put(`tomatoes/${this.props.unfinishedTomato.id}`,
@@ -58,7 +62,7 @@ class TomatoAction extends React.Component<tomatoActionProps, TomatoActionState>
                 </div>
             }else if (timeNow - startedAt < duration){
                 const timer = duration - timeNow + startedAt
-                html = <CountDown timer={timer}/>
+                html = <CountDown timer={timer} onFinish={this.onFinish}/>
             }
         }
 
