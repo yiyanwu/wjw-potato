@@ -1,0 +1,20 @@
+#TomatoList{
+    margin: 16px 0;
+    border-top: 1px solid #DDD;
+    >.List{
+        margin: 4px 0;
+        border-bottom: 1px solid #ddd;
+        >.title{
+            padding-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+        >.content{
+            margin-bottom: 2px;
+            >.time{ margin-right: 8px; margin-left: 4px; color: #999;}
+            >.description {overflow: hidden; color: #222222;}
+        }
+    }
+}
