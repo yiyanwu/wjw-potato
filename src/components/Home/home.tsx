@@ -4,6 +4,7 @@ import { DownOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons
 import axios from '../../config/axios'
 import Todos from '../Todos/todos'
 import Tomatoes from '../Tomatoes/tomatoes'
+import Statistics from '../Statistics/statistics'
 import { withRouter } from 'react-router-dom'
 import './home.scss'
 
@@ -56,6 +57,9 @@ class Home extends React.Component<any, indexState> {
                     <Tomatoes />
                     <Todos />
                 </main>
+                <div>   
+                    <Statistics />
+                </div>
             </div>
         )
     }
