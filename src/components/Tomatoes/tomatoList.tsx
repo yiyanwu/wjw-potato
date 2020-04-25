@@ -16,9 +16,6 @@ const TomatoItem = function (props:any){
 }
 
 class TomatoList extends React.Component<tomatoListProps> {
-    constructor(props:any){
-        super(props)
-    }
     
     get dates (){
         const dates = Object.keys(this.props.finishedTomatoes)

@@ -2,7 +2,7 @@ import * as React from 'react'
 import TomatoAction from './tomatoAction'
 import TomatoList from './tomatoList'
 import {connect} from 'react-redux'
-import { addTomato, initTomatoes, updateTomato} from '../../redux/actions/tomatoes'
+import { addTomato,updateTomato} from '../../redux/actions/tomatoes'
 import _ from 'lodash'
 import { format, parseISO} from 'date-fns'
 import axios from '../../config/axios'
@@ -16,13 +16,6 @@ interface tomatoesProps {
 }
 
 class Tomatoes extends React.Component<tomatoesProps>{
-    constructor(props:any){
-        super(props)
-    }
-
-    componentDidMount(){
-        this.getTomatoes()
-    }
 
     get unfinishedTomato () {
         return this.props.tomatoes.filter((t:any) => 
@@ -37,15 +30,6 @@ class Tomatoes extends React.Component<tomatoesProps>{
             return format(parseISO(t.started_at),'yyyy-MM-d')
         })
         return obj
-    }
-
-    getTomatoes = async () => {
-        try {
-            const response = await axios.get('tomatoes')
-            this.props.initTomatoes(response.data.resources)
-        } catch (error) {
-            throw new Error(error)
-        }
     }
 
     startTomato = async () => {
@@ -77,7 +61,6 @@ const mapStateToProps = (state: { tomatoes: any; }, ownProps: any) => ({
 
 const mapDispatchToProps = {
     addTomato,
-    initTomatoes,
     updateTomato
 }
 

@@ -2,6 +2,9 @@ import * as React from 'react'
 import {  Menu, Dropdown } from 'antd'
 import { DownOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
+import { connect} from 'react-redux'
+import { initTodos } from '../../redux/actions/todos'
+import { initTomatoes } from '../../redux/actions/tomatoes'
 import Todos from '../Todos/todos'
 import Tomatoes from '../Tomatoes/tomatoes'
 import Statistics from '../Statistics/statistics'
@@ -22,11 +25,30 @@ class Home extends React.Component<any, indexState> {
 
     async UNSAFE_componentWillMount() {
         await this.getMe()
+        await this.getTodo()
+        await this.getTomatoes()
     }
 
     getMe = async () => {
         const response = await axios.get('me')
         this.setState({ user: response.data })
+    }
+
+    getTodo = async () => {
+        try {
+            const response = await axios.get('todos')
+            const todos = response.data.resources.map((t: any) => Object.assign({}, t, { editing: false }))
+            this.props.initTodos(todos)
+        } catch (e) { throw new Error(e) }
+    }
+
+    getTomatoes = async () => {
+        try {
+            const response = await axios.get('tomatoes')
+            this.props.initTomatoes(response.data.resources)
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 
     signOut = () => {
@@ -65,4 +87,13 @@ class Home extends React.Component<any, indexState> {
     }
 }
 
-export default withRouter(Home)
+const mapStateToProps = (state: { todos: any; }, ownProps: any) => ({
+    ...ownProps
+})
+
+const mapDispatchToProps = {
+    initTodos,
+    initTomatoes
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Home))
