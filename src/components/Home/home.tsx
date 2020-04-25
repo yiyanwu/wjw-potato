@@ -45,7 +45,7 @@ class Home extends React.Component<any, indexState> {
         return (
             <div className="Home" id="Home">
                 <header>
-                    <span className="Logo">LOGO</span>
+                    <span className="Logo">WJW-番茄土豆</span>
                     <Dropdown overlay={this.menu} trigger={['click']}>
                         <span className="User">
                             {this.state.user.account} <DownOutlined style={{ marginLeft: 8 }}/>
