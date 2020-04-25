@@ -7,5 +7,15 @@
     background: #fff;
     >.todoLists{
         margin-top: 16px;
+        >.empty{
+               margin: 40px;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+            >span{
+               font-size: 64px;
+               color: #ddd;
+            }
+        }
     }
 }

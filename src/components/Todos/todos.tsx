@@ -19,6 +19,16 @@ class Todos extends React.Component<any> {
         return this.unDeletedTodos.filter((t: any) => t.completed)
     }
 
+    emptyTodoList = ()=> {
+        if(this.unCompletedTodos.length === 0){
+            return (
+                <div className="empty">
+                    <span>无记录</span>
+                </div>
+            )
+        }
+    }
+
     render () {
         return (
             <div className="Todos" id="Todos">
@@ -28,6 +38,7 @@ class Todos extends React.Component<any> {
                         this.unCompletedTodos.map((t: any) => 
                         <TodoItem key={t.id} {...t}/>)
                     }
+                    {this.emptyTodoList()}
                 </div>
             </div>
         )
