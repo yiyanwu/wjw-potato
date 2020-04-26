@@ -9,7 +9,7 @@ interface tomatoListProps {
 const TomatoItem = function (props:any){
     return (
         <div className="content">
-            <span className="time">{format(parseISO(props.started_at), 'H:mm')} - {format(parseISO(props.ended_at), 'H:mm')}</span>
+            <span className="time">{format(parseISO(props.started_at), 'HH:mm')} - {format(parseISO(props.ended_at), 'H:mm')}</span>
             <span className="description">{props.description}</span>
         </div>
     )
