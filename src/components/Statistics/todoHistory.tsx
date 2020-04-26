@@ -36,18 +36,8 @@ class TodoHistory extends React.Component<todoHistoryProps> {
         })
     }
 
-    get dailyDeletedTodos() {
-        return _.groupBy(this.deletedTodos, (t: any) => {
-            return format(parseISO(t.updated_at), 'yyyy-MM-d')
-        })
-    }
-
     get finishedDates() {
         return Object.keys(this.dailyFinishedTodos).sort((a, b) => Date.parse(b) - Date.parse(a))
-    }
-
-    get deletedDates() {
-        return Object.keys(this.dailyDeletedTodos).sort((a, b) => Date.parse(b) - Date.parse(a))
     }
 
     render() {
@@ -71,23 +61,9 @@ class TodoHistory extends React.Component<todoHistoryProps> {
             )
         })
 
-        const deletedTodoList = this.deletedDates.map(date => {
+        const deletedTodoList = this.deletedTodos.map(todo => {
             return (
-                <div key={date} className="dailyTodos">
-                    <div className="summary">
-                        <p className="date">
-                            <span>{date}</span>
-                            <span>周日</span>
-                        </p>
-                        <span className="finishedCount">删除了{this.dailyDeletedTodos[date].length}个任务</span>
-                    </div>
-                    <div className="todoList">
-                        {
-                            this.dailyDeletedTodos[date].map(todo =>
-                                <TodoItem key={todo.id} {...todo} />)
-                        }
-                    </div>
-                </div>
+                <TodoItem key={todo.id} {...todo}/> 
             )
         })
 
