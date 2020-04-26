@@ -10,7 +10,7 @@ interface todoHistoryProps {
 const TodoItem = function (param:any) {
     return(
         <div>
-            <span>{param.updated_at}</span>
+            <span>{format(parseISO(param.updated_at), 'H:mm')}</span>
             <span>{param.description}</span>
         </div>
     )
