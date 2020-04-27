@@ -4,6 +4,7 @@ import { format, parseISO } from 'date-fns'
 import { Tabs } from 'antd'
 import _ from 'lodash'
 import './todoHistory.scss'
+import  TodoHistoryItem from './todoHistoryItem'
 
 interface todoHistoryProps {
     todos: any[]
@@ -11,14 +12,6 @@ interface todoHistoryProps {
 
 const { TabPane } = Tabs;
 
-const TodoItem = function (param: any) {
-    return (
-        <div className="todoItem">
-            <span className="time">{format(parseISO(param.updated_at), 'HH:mm')}</span>
-            <span className="description">{param.description}</span>
-        </div>
-    )
-}
 
 class TodoHistory extends React.Component<todoHistoryProps> {
 
@@ -54,7 +47,8 @@ class TodoHistory extends React.Component<todoHistoryProps> {
                     <div className="todoList">
                         {
                             this.dailyFinishedTodos[date].map(todo =>
-                                <TodoItem key={todo.id} {...todo} />)
+                                <TodoHistoryItem key={todo.id} 
+                                todo={todo} itemType="finished"/>)
                         }
                     </div>
                 </div>
@@ -63,7 +57,7 @@ class TodoHistory extends React.Component<todoHistoryProps> {
 
         const deletedTodoList = this.deletedTodos.map(todo => {
             return (
-                <TodoItem key={todo.id} {...todo}/> 
+                <TodoHistoryItem key={todo.id} todo={todo} itemType="deleted"/> 
             )
         })
 

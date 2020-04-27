@@ -19,15 +19,15 @@ class Polygon extends React.Component<PolygonProps> {
             let finishedCount = 0
             let lastY
             const pointArr = dates.map(date => {
-                const x = (Date.parse(date) - Date.parse(firstDay))/range * 240
+                const x = (Date.parse(date) - Date.parse(firstDay))/range * 248
                 finishedCount += this.props.data[date].length
-                const y = (1 - finishedCount/this.props.totalFinishedCount) * 60
+                const y = (1 - (finishedCount/this.props.totalFinishedCount)) * 60
                 lastY = y
                 return `${x},${y}`
             })
-            return ['0,60',...pointArr,`240,${lastY}`,'240,60'].join(' ')
+            return ['0,60',...pointArr,`248,${lastY}`,'248,60'].join(' ')
         }else{
-            return "0,60 240,60"
+            return "0,60 248,60"
         }
     }
 

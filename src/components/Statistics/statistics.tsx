@@ -30,14 +30,16 @@ class Statistics extends React.Component<statisticsProps> {
                     <li>目标</li>
                     <li>番茄历史</li>
                     <li>
-                        任务历史
-                        累计完成任务
-                        {this.finishedTodos.length}
-                        <Polygon data={this.todosData} 
-                            totalFinishedCount={this.finishedTodos.length}/>
+                        <div className="gragh">
+                            <div className="title">任务历史</div>
+                            <span className="textTitle">累计完成任务</span>
+                            <span className="number">{this.finishedTodos.length}</span>
+                        </div>
+                        <Polygon data={this.todosData}
+                            totalFinishedCount={this.finishedTodos.length} />
                     </li>
                 </ul>
-                <TodoHistory/>
+                <TodoHistory />
             </div>
         )
     }

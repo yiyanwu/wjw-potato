@@ -25,20 +25,6 @@
         }
         .todoList{
             flex: 1;
-            >.todoItem{
-                padding: 8px;
-                font-size: 14px;
-                &:hover{
-                    background: #f4f4f4;
-                }
-                .time{
-                    color: #999;
-                    margin-right: 8px;
-                }
-                .description{
-                    color: #222222;
-                }
-            }
         }
     }
 }

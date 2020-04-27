@@ -1,0 +1,29 @@
+ #TodoHistoryItem{
+    padding: 8px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    &:hover{
+        background: #f4f4f4;
+        >.action {
+            display: block;
+        }
+    }
+    .action {
+        display: none;
+        cursor: pointer;
+        color: #0881B3;
+        >span{
+            padding: 0 8px ;
+        }
+    }
+    >.text{
+        >.time{
+            color: #999;
+            margin-right: 8px;
+        }
+        >.description{
+            color: #222222;
+        }
+    }
+}
