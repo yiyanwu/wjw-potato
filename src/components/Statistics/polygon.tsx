@@ -19,6 +19,10 @@ class Polygon extends React.Component<PolygonProps> {
             let finishedCount = 0
             let lastY
             const pointArr = dates.map(date => {
+                if(date === firstDay){
+                    lastY = 0
+                    return ''
+                }
                 const x = (Date.parse(date) - Date.parse(firstDay))/range * 248
                 finishedCount += this.props.data[date].length
                 const y = (1 - (finishedCount/this.props.totalFinishedCount)) * 60
