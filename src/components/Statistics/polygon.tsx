@@ -9,6 +9,7 @@ interface PolygonProps {
 
 class Polygon extends React.Component<PolygonProps> {
     
+
     points = ()=> {
         const dates = Object.keys(this.props.data).sort((a,b) =>{
             return Date.parse(a) - Date.parse(b)
@@ -23,15 +24,15 @@ class Polygon extends React.Component<PolygonProps> {
                     lastY = 0
                     return ''
                 }
-                const x = (Date.parse(date) - Date.parse(firstDay))/range * 248
+                const x = (Date.parse(date) - Date.parse(firstDay))/range * 332
                 finishedCount += this.props.data[date].length
                 const y = (1 - (finishedCount/this.props.totalFinishedCount)) * 60
                 lastY = y
                 return `${x},${y}`
             })
-            return ['0,60',...pointArr,`248,${lastY}`,'248,60'].join(' ')
+            return ['0,60',...pointArr,`332,${lastY}`,'332,60'].join(' ')
         }else{
-            return "0,60 248,60"
+            return "0,60 332,60"
         }
     }
 

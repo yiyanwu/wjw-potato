@@ -1,8 +1,8 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {format,parseISO} from 'date-fns'
-import { updateTodo} from '../../redux/actions/todos'
-import axios from '../../config/axios'
+import { updateTodo} from '../../../redux/actions/todos'
+import axios from '../../../config/axios'
 import './todoHistoryItem.scss'
 
 interface todoHistoryItemProps {
