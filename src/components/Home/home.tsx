@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {  Menu, Dropdown } from 'antd'
-import { DownOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
+import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import axios from '../../config/axios'
 import { connect} from 'react-redux'
 import { initTodos } from '../../redux/actions/todos'
@@ -58,7 +58,6 @@ class Home extends React.Component<any, indexState> {
 
     menu = (
         <Menu>
-            <Menu.Item key="1"><SettingOutlined/>设置</Menu.Item>
             <Menu.Item key="2" onClick={this.signOut}><LogoutOutlined/>登出</Menu.Item>
         </Menu>
     );

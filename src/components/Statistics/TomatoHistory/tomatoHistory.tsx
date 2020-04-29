@@ -15,8 +15,10 @@ const { TabPane } = Tabs;
 
 class TomatoHistory extends React.Component<tomatoHistoryProps> {
 
+
+
     get finishedTomatoes() {
-        return this.props.tomatoes.filter(t => t.description && !t.aborted && t.ended_at)
+        return this.props.tomatoes.filter(t => t.description && !t.aborted && t.ended_at && !t.deleted)
     }
 
     get abortedTomatoes() {
