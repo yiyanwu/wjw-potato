@@ -7,7 +7,7 @@ import { initTodos } from '../../redux/actions/todos'
 import { initTomatoes } from '../../redux/actions/tomatoes'
 import Todos from '../Todos/todos'
 import Tomatoes from '../Tomatoes/tomatoes'
-import Statistics from '../Statistics/statistics'
+import Histories from '../Histories/histories'
 import { withRouter } from 'react-router-dom'
 import './home.scss'
 
@@ -79,7 +79,7 @@ class Home extends React.Component<any, indexState> {
                     <Todos />
                 </main>
                 <div>   
-                    <Statistics />
+                    <Histories />
                 </div>
             </div>
         )

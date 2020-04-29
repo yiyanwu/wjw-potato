@@ -5,14 +5,15 @@ import { format, parseISO} from 'date-fns'
 import Polygon from './polygon'
 import TodoHistory from './TodoHistory/todoHistory'
 import TomatoHistory from './TomatoHistory/tomatoHistory'
-import './statistics.scss'
+import Statistics from './Statistics/statistics'
+import './histories.scss'
 
-interface statisticsProps {
+interface historiesProps {
     todos:any
     tomatoes:any
 }
 
-class Statistics extends React.Component<statisticsProps> {
+class Histories extends React.Component<historiesProps> {
     
     get finishedTodos (){
         return this.props.todos.filter((t:any) => t.completed && !t.deleted)
@@ -36,7 +37,7 @@ class Statistics extends React.Component<statisticsProps> {
 
     render () {
         return (
-            <div className="Statistics" id="Statistics">
+            <div className="Histories" id="Histories">
                 <ul>
                     <li>统计</li>
                     <li>
@@ -58,7 +59,8 @@ class Statistics extends React.Component<statisticsProps> {
                             totalFinishedCount={this.finishedTodos.length} />
                     </li>
                 </ul>
-                <TomatoHistory/>
+                <Statistics />
+                {/* <TomatoHistory/> */}
                 {/* <TodoHistory /> */}
             </div>
         )
@@ -71,4 +73,4 @@ const mapStateToProps = (state: { todos: any;tomatoes:any }, ownProps: any) => (
     ...ownProps
 })
 
-export default connect(mapStateToProps)(Statistics)
+export default connect(mapStateToProps)(Histories)

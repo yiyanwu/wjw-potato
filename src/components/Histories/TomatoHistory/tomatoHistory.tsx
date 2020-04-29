@@ -18,7 +18,7 @@ class TomatoHistory extends React.Component<tomatoHistoryProps> {
 
 
     get finishedTomatoes() {
-        return this.props.tomatoes.filter(t => t.description && !t.aborted && t.ended_at && !t.deleted)
+        return this.props.tomatoes.filter(t => t.description && !t.aborted && t.ended_at )
     }
 
     get abortedTomatoes() {
@@ -70,7 +70,7 @@ class TomatoHistory extends React.Component<tomatoHistoryProps> {
                         {finishedTomatoList}
                     </div>
                 </TabPane>
-                <TabPane tab="打断记录" key="2">
+                <TabPane tab="弃用番茄记录" key="2">
                     <div className="TomatoHistory" id="TomatoHistory">
                         {abortedTomatoList}
                     </div>
