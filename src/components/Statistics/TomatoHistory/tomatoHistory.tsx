@@ -22,7 +22,7 @@ class TomatoHistory extends React.Component<tomatoHistoryProps> {
     }
 
     get abortedTomatoes() {
-        return this.props.tomatoes.filter(t => t.aborted)
+        return this.props.tomatoes.filter(t => t.aborted && t.description)
     }
 
     get dailyFinishedTomatoes() {

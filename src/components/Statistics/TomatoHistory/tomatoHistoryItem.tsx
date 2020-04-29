@@ -50,7 +50,7 @@ class TomatoHistoryItem extends React.Component<tomatoHistoryItemProps, tomatoHi
             action = (
                 <div className="action">
                     <span onClick={() => this.updateTomato({ extra: {editing:true} })}>编辑</span>
-                    <span onClick={() => this.updateTomato({ deleted: true })}>删除</span>
+                    <span onClick={() => this.updateTomato({ aborted: true })}>删除</span>
                 </div>
             )
         } else if (this.props.itemType === 'aborted') {
