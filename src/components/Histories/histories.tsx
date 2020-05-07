@@ -39,7 +39,11 @@ class Histories extends React.Component<historiesProps> {
         return (
             <div className="Histories" id="Histories">
                 <ul>
-                    <li>统计</li>
+                    <li>
+                        <div className="gragh">
+                            <div className="title">统计</div>
+                        </div>
+                    </li>
                     <li>
                         <div className="gragh">
                             <div className="title">番茄历史</div>
