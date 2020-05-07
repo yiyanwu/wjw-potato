@@ -12,32 +12,51 @@ interface StatisticsItemProps {
 }
 
 interface StatisticsItemState {
-    timeSpan:number
+    timeSpan:number,
+    width:number | null
 }
+
 
 
 class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItemState> {
     constructor(props: any) {
         super(props)
         this.state = {
-            timeSpan: 30
+            timeSpan: 30,
+            width:968
         }
     }
 
+    componentDidMount () {
+        this.handleWidth()
+        window.addEventListener('resize',this.handleWidth)
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('resize',this.handleWidth)
+    }
+
+    handleWidth = () => {
+        const ele = document.getElementById('StatisticsItem')
+        const rect = document.getElementById('rect')
+        const left = ele?.getBoundingClientRect().left
+        const right = ele?.getBoundingClientRect().right
+        let wid
+        if (left) { wid = (right && left) ? right - left - 32 : null}else{
+            wid = right ? right - 32 : null
+        }
+        this.setState({width:wid})
+        if (rect) rect.style.width = `${this.state.width}px`
+    }
 
     onChange = (e: any) => {
         const timeSpan = Math.ceil((e[1]._d.getTime() - e[0]._d.getTime()) / (1000 * 60 * 60 * 24)) + 1
         this.setState({ timeSpan: timeSpan })
     }
 
+
     render () {
         const average = Math.floor((this.props.totalCount / this.state.timeSpan) * 100) / 100
-        const ele = document.getElementById('StatisticsItem')
-        const rect = document.getElementById('rect')
-        const left = ele?.getBoundingClientRect().left
-        const right = ele?.getBoundingClientRect().right
-        const wid = (right && left) ? right - left - 32 : null
-        if (rect) rect.style.width = `${wid}px`
 
         return(
             <div className="StatisticsItem" id="StatisticsItem">
