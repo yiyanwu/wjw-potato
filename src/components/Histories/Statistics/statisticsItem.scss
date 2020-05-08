@@ -22,10 +22,15 @@
         border: 1px solid #ddd;
         text-align: center;
         padding: 16px;
-        >svg >rect{
+        >svg >g >rect{
             fill: #f4f4f4;
             stroke: #ddd;
             stroke-width: .5;
+        }
+        >svg >g >circle {
+            stroke: rgba(200,40,41,.8);
+            fill: #fff;
+            stroke-width: 2px;
         }
     }
 }

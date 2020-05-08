@@ -1,19 +1,17 @@
 import * as React from 'react'
 import { DatePicker } from 'antd'
-import moment from 'moment'
+import { getDaysInMonth} from 'date-fns'
 import './statisticsItem.scss'
 
 
-const { RangePicker } = DatePicker;
-const dateFormat = 'YYYY/MM/DD';
-
 interface StatisticsItemProps {
-    totalCount:number
+    totalCount: number
 }
 
 interface StatisticsItemState {
-    timeSpan:number,
-    width:number | null
+    timeSpan: number,
+    width: number | null,
+    arr: any[]
 }
 
 
@@ -22,18 +20,19 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
     constructor(props: any) {
         super(props)
         this.state = {
-            timeSpan: 30,
-            width:968
+            timeSpan: 0,
+            width: 968,
+            arr: []
         }
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.handleWidth()
-        window.addEventListener('resize',this.handleWidth)
+        window.addEventListener('resize', this.handleWidth)
     }
 
-    componentWillUnmount(){
-        window.removeEventListener('resize',this.handleWidth)
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleWidth)
     }
 
     handleWidth = () => {
@@ -42,41 +41,58 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
         const left = ele?.getBoundingClientRect().left
         const right = ele?.getBoundingClientRect().right
         let wid
-        if (left) { wid = (right && left) ? right - left - 32 : null}else{
+        if (left) { wid = (right && left) ? right - left - 32 : null } else {
             wid = right ? right - 32 : null
         }
-        this.setState({width:wid})
+        this.setState({ width: wid })
         if (rect) rect.style.width = `${this.state.width}px`
+        this.handleArr()
     }
 
-    onChange = (e: any) => {
-        const timeSpan = Math.ceil((e[1]._d.getTime() - e[0]._d.getTime()) / (1000 * 60 * 60 * 24)) + 1
-        this.setState({ timeSpan: timeSpan })
+    handleArr = () => {
+        let span = this.state.width ? (this.state.width * 97.5 / 100) / (this.state.timeSpan - 1) : 0
+        let arr = Array.from(new Array(this.state.timeSpan), (k, i) => ({ x: (i * span), y: 170 }))
+        this.setState({arr})
     }
 
+    handleTimeSpan = (e: any) => {
+        this.handleWidth()
+        const year = new Date(e._d).getFullYear()
+        const month = new Date(e._d).getMonth() 
+        const timeSpan = getDaysInMonth(new Date(year, month))
+        let span = this.state.width ? (this.state.width * 97.5 / 100) / (timeSpan - 1) : 0
+        let arr = Array.from(new Array(timeSpan), (k, i) => ({ x: (i * span), y: 170 }))
+        this.setState({ timeSpan: timeSpan,arr: arr})
+    }
 
-    render () {
-        const average = Math.floor((this.props.totalCount / this.state.timeSpan) * 100) / 100
-
-        return(
+    render() {
+        const average = this.state.timeSpan ? (Math.floor((this.props.totalCount / this.state.timeSpan) * 100) / 100) : 0
+        return (
             <div className="StatisticsItem" id="StatisticsItem">
                 <div className="timeContainer">
-                    <RangePicker onChange={this.onChange}
-                        defaultValue={[moment('2020/04/01', dateFormat), moment('2020/04/30', dateFormat)]}
-                        format={dateFormat} />
+                    <DatePicker 
+                        allowClear={false}
+                        onChange={this.handleTimeSpan}
+                        picker="month" />
                 </div>
                 <div className="countContainer">
                     <span className="count"><strong>{this.props.totalCount}</strong> 总数</span>
                     <span className="count"><strong>{average}</strong> 日平均数</span>
                 </div>
-               <div className="chartContainer">
-                   <svg width="100%" height="200px">
-                       <rect x="0" y="0"  height="170px" id="rect"></rect>
-                       <path></path>
-                       <text></text>
-                       <circle></circle>
-                   </svg>
-               </div>
+                <div className="chartContainer">
+                    <svg width="100%" height="200px">
+                        <g>
+                            <rect x="0" y="0" height="170px" id="rect"></rect>
+                            {this.state.arr.map((e,i) => {
+                                return <text x={e.x} y={e.y + 30} textAnchor="middle" key={i}>{i + 1}</text>
+                            })}
+                            <path></path>
+                            {this.state.arr.map((e, i) => {
+                                return <circle cx={e.x} cy={e.y} r="5" key={i}></circle>
+                            })}
+                        </g>
+                    </svg>
+                </div>
             </div>
         )
     }
