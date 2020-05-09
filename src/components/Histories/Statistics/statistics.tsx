@@ -36,12 +36,31 @@ class Statistics extends React.Component<StatisticsProps> {
         })
     }
 
+    get monthFinishedTodos() {
+        return _.groupBy(this.finishedTodos, (t: any) => {
+            return format(parseISO(t.updated_at), 'yyyy-MM')
+        })
+    }
+
+    get monthFinishedTomatoes() {
+        return _.groupBy(this.finishedTomatoes, (t: any) => {
+            return format(parseISO(t.started_at), 'yyyy-MM')
+        })
+    }
+
+    get tomatoMonths() {
+        return Object.keys(this.monthFinishedTomatoes).sort((a, b) => Date.parse(b) - Date.parse(a))
+    }
+
     render(){
         return(
             <Tabs defaultActiveKey="1">
                 <TabPane tab="番茄统计" key="1">
                     <div className="TodoHistory" id="TodoHistory">
-                        <StatisticsItem totalCount={this.finishedTodos.length}/>
+                        <StatisticsItem  
+                            dailyFinishedTomatoes={this.dailyFinishedTomatoes}
+                            monthTomatoes={this.monthFinishedTomatoes}
+                            finishedMonths={this.tomatoMonths}/>
                     </div>
                 </TabPane>
                 <TabPane tab="任务统计" key="2">

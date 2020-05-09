@@ -1,19 +1,22 @@
 import * as React from 'react'
 import { DatePicker } from 'antd'
-import { getDaysInMonth} from 'date-fns'
+import { getDaysInMonth, isLeapYear} from 'date-fns'
+import dayjs from 'dayjs'
 import './statisticsItem.scss'
 
 
 interface StatisticsItemProps {
-    totalCount: number
+    monthTomatoes: any,
+    finishedMonths: any,
+    dailyFinishedTomatoes: any
 }
 
 interface StatisticsItemState {
     timeSpan: number,
     width: number | null,
-    arr: any[]
+    arr: any[],
+    monthTomatoesCount: number
 }
-
 
 
 class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItemState> {
@@ -22,7 +25,8 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
         this.state = {
             timeSpan: 0,
             width: 968,
-            arr: []
+            arr: [],
+            monthTomatoesCount: 0
         }
     }
 
@@ -52,52 +56,86 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
     handleArr = () => {
         let span = this.state.width ? (this.state.width * 97.5 / 100) / (this.state.timeSpan - 1) : 0
         let arr = Array.from(new Array(this.state.timeSpan), (k, i) => ({ x: (i * span), y: 170 }))
-        this.setState({arr})
+        this.setState({ arr })
+    }
+
+    getDays = (year: number, month: number) => {
+        if (month === 2) {
+            return isLeapYear(year) ? 29 : 28
+        }
+
+        const dayObj = {
+            1: 31, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31
+        }
+
+        return (dayObj as any)[month]
     }
 
     handleTimeSpan = (e: any) => {
         this.handleWidth()
         const year = new Date(e._d).getFullYear()
-        const month = new Date(e._d).getMonth() 
+        const month = new Date(e._d).getMonth() + 1
         const timeSpan = getDaysInMonth(new Date(year, month))
-        let span = this.state.width ? (this.state.width * 97.5 / 100) / (timeSpan - 1) : 0
-        let arr = Array.from(new Array(timeSpan), (k, i) => ({ x: (i * span), y: 170 }))
-        this.setState({ timeSpan: timeSpan,arr: arr})
+        const date = dayjs(e._d).format('YYYY-MM')
+        let count
+        if (this.props.finishedMonths.includes(date)) {
+            count = this.props.monthTomatoes[date].length
+        } else {
+            count = 0
+        }
+        const dateArr = Object.keys(this.props.dailyFinishedTomatoes)
+        const selectedMonth = Array.from({ length: this.getDays(year, month) }, (v, k) => `${year}-${month}-${k+1}`)
+        const dailyTomatoes = dateArr.map(d => { return Math.max(this.props.dailyFinishedTomatoes[d].length) })
+        const Xspan = this.state.width ? (this.state.width * 97.5 / 100) / (timeSpan - 1) : 0
+        const Yspan = 170 / dailyTomatoes[0]
+        const arr = Array.from(new Array(timeSpan), (k, i) => {
+            let array
+            selectedMonth.map(d => {
+                const day = dayjs(d).format('YYYY-MM-DD')
+                if (new Date(d).getDate() === i && dateArr.includes(day)) {
+                    return array = { x: (i * Xspan), y: (170 - (this.props.dailyFinishedTomatoes[day].length) * Yspan) }
+                } else {
+                    return array = { x: (i * Xspan), y: 170 }
+                }
+            })
+            return array
+        })
+        this.setState({ timeSpan: timeSpan, arr: arr, monthTomatoesCount: count })
+
     }
 
     point = () => {
         let firstPoint = this.state.arr[0]
-        if(firstPoint){
+        if (firstPoint) {
             const pointArr = this.state.arr.map(e => {
-                return `L${e.x +7.5},${e.y}`
+                return `L${e.x + 7.5},${e.y}`
             })
             return [`M${firstPoint.x + 7.5},${firstPoint.y}`, ...pointArr].join(' ')
-        }else{
+        } else {
             return "M7.5,170 L7.5,170"
         }
     }
 
     render() {
-        const average = this.state.timeSpan ? (Math.floor((this.props.totalCount / this.state.timeSpan) * 100) / 100) : 0
-        const firstPoint = this.state.arr[0]
+        const average = this.state.timeSpan ? (Math.floor((this.state.monthTomatoesCount / this.state.timeSpan) * 100) / 100) : 0
         return (
             <div className="StatisticsItem" id="StatisticsItem">
                 <div className="timeContainer">
-                    <DatePicker 
+                    <DatePicker
                         allowClear={false}
                         onChange={this.handleTimeSpan}
                         picker="month" />
                 </div>
                 <div className="countContainer">
-                    <span className="count"><strong>{this.props.totalCount}</strong> 总数</span>
+                    <span className="count"><strong>{this.state.monthTomatoesCount}</strong> 总数</span>
                     <span className="count"><strong>{average}</strong> 日平均数</span>
                 </div>
                 <div className="chartContainer">
                     <svg width="100%" height="200px">
                         <g>
                             <rect x="0" y="0" height="170px" id="rect"></rect>
-                            {this.state.arr.map((e,i) => {
-                                return <text x={e.x + 7.5} y={e.y + 30} textAnchor="middle" key={i}>{i + 1}</text>
+                            {this.state.arr.map((e, i) => {
+                                return <text x={e.x + 7.5} y={200} textAnchor="middle" key={i}>{i + 1}</text>
                             })}
                             <path d={this.point()}></path>
                             {this.state.arr.map((e, i) => {

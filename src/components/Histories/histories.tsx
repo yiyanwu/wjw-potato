@@ -63,7 +63,7 @@ class Histories extends React.Component<historiesProps> {
                             totalFinishedCount={this.finishedTodos.length} />
                     </li>
                 </ul>
-                <Statistics />
+                {<Statistics />}
                 {/* <TomatoHistory/> */}
                 {/* <TodoHistory /> */}
             </div>
