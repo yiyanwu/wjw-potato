@@ -65,8 +65,21 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
         this.setState({ timeSpan: timeSpan,arr: arr})
     }
 
+    point = () => {
+        let firstPoint = this.state.arr[0]
+        if(firstPoint){
+            const pointArr = this.state.arr.map(e => {
+                return `L${e.x +7.5},${e.y}`
+            })
+            return [`M${firstPoint.x + 7.5},${firstPoint.y}`, ...pointArr].join(' ')
+        }else{
+            return "M7.5,170 L7.5,170"
+        }
+    }
+
     render() {
         const average = this.state.timeSpan ? (Math.floor((this.props.totalCount / this.state.timeSpan) * 100) / 100) : 0
+        const firstPoint = this.state.arr[0]
         return (
             <div className="StatisticsItem" id="StatisticsItem">
                 <div className="timeContainer">
@@ -84,11 +97,11 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
                         <g>
                             <rect x="0" y="0" height="170px" id="rect"></rect>
                             {this.state.arr.map((e,i) => {
-                                return <text x={e.x} y={e.y + 30} textAnchor="middle" key={i}>{i + 1}</text>
+                                return <text x={e.x + 7.5} y={e.y + 30} textAnchor="middle" key={i}>{i + 1}</text>
                             })}
-                            <path></path>
+                            <path d={this.point()}></path>
                             {this.state.arr.map((e, i) => {
-                                return <circle cx={e.x} cy={e.y} r="5" key={i}></circle>
+                                return <circle cx={e.x + 7.5} cy={e.y} r="5" key={i}></circle>
                             })}
                         </g>
                     </svg>

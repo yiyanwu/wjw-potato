@@ -32,5 +32,10 @@
             fill: #fff;
             stroke-width: 2px;
         }
+        >svg >g > path {
+            stroke: rgba(200,40,41,.6);
+            stroke-width: 2.5px;
+            fill: none;
+        }
     }
 }
