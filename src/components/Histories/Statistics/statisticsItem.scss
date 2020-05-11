@@ -1,6 +1,10 @@
 #StatisticsItem{
     >.timeContainer{
         margin:16px 4px;
+        >.monthChoose{
+            color: #1890ff;
+            padding-right: 8px;
+        }
     }
     >.countContainer {
         display: flex;

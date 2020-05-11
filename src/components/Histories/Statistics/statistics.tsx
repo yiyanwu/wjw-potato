@@ -52,20 +52,27 @@ class Statistics extends React.Component<StatisticsProps> {
         return Object.keys(this.monthFinishedTomatoes).sort((a, b) => Date.parse(b) - Date.parse(a))
     }
 
+    get todoMonths () {
+        return Object.keys(this.monthFinishedTodos).sort((a, b) => Date.parse(b) - Date.parse(a))
+    }
+
     render(){
         return(
             <Tabs defaultActiveKey="1">
                 <TabPane tab="番茄统计" key="1">
-                    <div className="TodoHistory" id="TodoHistory">
+                    <div className="TomatoHistory" id="TomatoHistory">
                         <StatisticsItem  
-                            dailyFinishedTomatoes={this.dailyFinishedTomatoes}
-                            monthTomatoes={this.monthFinishedTomatoes}
+                            dailyFinishedJobs={this.dailyFinishedTomatoes}
+                            monthJobs={this.monthFinishedTomatoes}
                             finishedMonths={this.tomatoMonths}/>
                     </div>
                 </TabPane>
                 <TabPane tab="任务统计" key="2">
                     <div className="TodoHistory" id="TodoHistory">
-                        22
+                        <StatisticsItem
+                            dailyFinishedJobs={this.dailyFinishedTodos}
+                            monthJobs={this.monthFinishedTodos}
+                            finishedMonths={this.todoMonths} />
                     </div>
                 </TabPane>
             </Tabs>

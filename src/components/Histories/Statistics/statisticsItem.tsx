@@ -6,9 +6,9 @@ import './statisticsItem.scss'
 
 
 interface StatisticsItemProps {
-    monthTomatoes: any,
+    monthJobs: any,
     finishedMonths: any,
-    dailyFinishedTomatoes: any
+    dailyFinishedJobs: any
 }
 
 interface StatisticsItemState {
@@ -41,7 +41,7 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
 
     handleWidth = () => {
         const ele = document.getElementById('StatisticsItem')
-        const rect = document.getElementById('rect')
+        const rect = document.getElementsByClassName('rect')
         const left = ele?.getBoundingClientRect().left
         const right = ele?.getBoundingClientRect().right
         let wid
@@ -49,7 +49,7 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
             wid = right ? right - 32 : null
         }
         this.setState({ width: wid })
-        if (rect) rect.style.width = `${this.state.width}px`
+        if (rect) Array.prototype.map.call(rect, r => { r.style.width = `${this.state.width}px`})
         this.handleArr()
     }
 
@@ -75,30 +75,27 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
         this.handleWidth()
         const year = new Date(e._d).getFullYear()
         const month = new Date(e._d).getMonth() + 1
-        const timeSpan = getDaysInMonth(new Date(year, month))
+        const timeSpan = getDaysInMonth(new Date(year, month)) - 1
         const date = dayjs(e._d).format('YYYY-MM')
         let count
         if (this.props.finishedMonths.includes(date)) {
-            count = this.props.monthTomatoes[date].length
+            count = this.props.monthJobs[date].length
         } else {
             count = 0
         }
-        const dateArr = Object.keys(this.props.dailyFinishedTomatoes)
+        const dateArr = Object.keys(this.props.dailyFinishedJobs)
         const selectedMonth = Array.from({ length: this.getDays(year, month) }, (v, k) => `${year}-${month}-${k+1}`)
-        const dailyTomatoes = dateArr.map(d => { return Math.max(this.props.dailyFinishedTomatoes[d].length) })
+        const dailyJobs = dateArr.map(d => {  return this.props.dailyFinishedJobs[d].length })
         const Xspan = this.state.width ? (this.state.width * 97.5 / 100) / (timeSpan - 1) : 0
-        const Yspan = 170 / dailyTomatoes[0]
+        const Yspan = 170 / Math.max.apply(null, dailyJobs) 
         const arr = Array.from(new Array(timeSpan), (k, i) => {
-            let array
-            selectedMonth.map(d => {
-                const day = dayjs(d).format('YYYY-MM-DD')
-                if (new Date(d).getDate() === i && dateArr.includes(day)) {
-                    return array = { x: (i * Xspan), y: (170 - (this.props.dailyFinishedTomatoes[day].length) * Yspan) }
-                } else {
-                    return array = { x: (i * Xspan), y: 170 }
-                }
-            })
-            return array
+            let y
+            const selectedDays = dayjs(selectedMonth[i]).format('YYYY-MM-DD')
+            const length = this.props.dailyFinishedJobs[selectedDays] ? this.props.dailyFinishedJobs[selectedDays].length : 0
+            if (length > 0){
+                y = 176 - length * Yspan 
+            } else { y = 170}
+            return {x:(i*Xspan),y:y}
         })
         this.setState({ timeSpan: timeSpan, arr: arr, monthTomatoesCount: count })
 
@@ -121,6 +118,7 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
         return (
             <div className="StatisticsItem" id="StatisticsItem">
                 <div className="timeContainer">
+                    <span className="monthChoose">请选择月份：</span>
                     <DatePicker
                         allowClear={false}
                         onChange={this.handleTimeSpan}
@@ -133,7 +131,7 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
                 <div className="chartContainer">
                     <svg width="100%" height="200px">
                         <g>
-                            <rect x="0" y="0" height="170px" id="rect"></rect>
+                            <rect x="0" y="0" height="170px" id="rect" className="rect"></rect>
                             {this.state.arr.map((e, i) => {
                                 return <text x={e.x + 7.5} y={200} textAnchor="middle" key={i}>{i + 1}</text>
                             })}
