@@ -74,8 +74,8 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
     handleTimeSpan = (e: any) => {
         this.handleWidth()
         const year = new Date(e._d).getFullYear()
-        const month = new Date(e._d).getMonth() + 1
-        const timeSpan = getDaysInMonth(new Date(year, month)) - 1
+        const month = new Date(e._d).getMonth() 
+        const timeSpan = getDaysInMonth(new Date(year, month)) 
         const date = dayjs(e._d).format('YYYY-MM')
         let count
         if (this.props.finishedMonths.includes(date)) {
@@ -84,7 +84,7 @@ class StatisticsItem extends React.Component<StatisticsItemProps, StatisticsItem
             count = 0
         }
         const dateArr = Object.keys(this.props.dailyFinishedJobs)
-        const selectedMonth = Array.from({ length: this.getDays(year, month) }, (v, k) => `${year}-${month}-${k+1}`)
+        const selectedMonth = Array.from({ length: this.getDays(year, month + 1) }, (v, k) => `${year}-${month + 1}-${k+1}`)
         const dailyJobs = dateArr.map(d => {  return this.props.dailyFinishedJobs[d].length })
         const Xspan = this.state.width ? (this.state.width * 97.5 / 100) / (timeSpan - 1) : 0
         const Yspan = 170 / Math.max.apply(null, dailyJobs) 
