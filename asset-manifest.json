@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/wjw-potato/static/css/main.c9260b39.chunk.css",
+    "main.js": "/wjw-potato/static/js/main.662bd11c.chunk.js",
+    "main.js.map": "/wjw-potato/static/js/main.662bd11c.chunk.js.map",
+    "runtime-main.js": "/wjw-potato/static/js/runtime-main.89a041e4.js",
+    "runtime-main.js.map": "/wjw-potato/static/js/runtime-main.89a041e4.js.map",
+    "static/css/2.ac55bf83.chunk.css": "/wjw-potato/static/css/2.ac55bf83.chunk.css",
+    "static/js/2.d12f5299.chunk.js": "/wjw-potato/static/js/2.d12f5299.chunk.js",
+    "static/js/2.d12f5299.chunk.js.map": "/wjw-potato/static/js/2.d12f5299.chunk.js.map",
+    "index.html": "/wjw-potato/index.html",
+    "precache-manifest.8865c58dfa040420a07b5dc72200fcdc.js": "/wjw-potato/precache-manifest.8865c58dfa040420a07b5dc72200fcdc.js",
+    "service-worker.js": "/wjw-potato/service-worker.js",
+    "static/css/2.ac55bf83.chunk.css.map": "/wjw-potato/static/css/2.ac55bf83.chunk.css.map",
+    "static/css/main.c9260b39.chunk.css.map": "/wjw-potato/static/css/main.c9260b39.chunk.css.map",
+    "static/js/2.d12f5299.chunk.js.LICENSE.txt": "/wjw-potato/static/js/2.d12f5299.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.89a041e4.js",
+    "static/css/2.ac55bf83.chunk.css",
+    "static/js/2.d12f5299.chunk.js",
+    "static/css/main.c9260b39.chunk.css",
+    "static/js/main.662bd11c.chunk.js"
+  ]
+}
