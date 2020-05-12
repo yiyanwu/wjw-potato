@@ -34,13 +34,14 @@ class TodoHistory extends React.Component<todoHistoryProps> {
     }
 
     render() {
+        const weekDay = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
         const finishedTodoList = this.finishedDates.map(date => {
             return (
                 <div key={date} className="dailyTodos">
                     <div className="summary">
                         <p className="date">
                             <span>{date}</span>
-                            <span>周日</span>
+                            <span>{weekDay[new Date(date).getDay()]}</span>
                         </p>
                         <span className="finishedCount">完成了{this.dailyFinishedTodos[date].length}个任务</span>
                     </div>
