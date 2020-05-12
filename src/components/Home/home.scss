@@ -17,5 +17,12 @@
     >footer{
         border-top: 1px solid #EEE;
         margin: 2em auto 1em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding:4px 0;
+        >span{
+            padding-left: 4px;
+        }
     }
 }
