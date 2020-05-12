@@ -23,7 +23,7 @@ class Histories extends React.Component<historiesProps, historiesState> {
     constructor(props: Readonly<historiesProps>){
         super(props)
         this.state = {
-            staDisPlay:'none',
+            staDisPlay:'block',
             tomatoDisPlay:'none',
             todoDisPlay:'none'
         }
