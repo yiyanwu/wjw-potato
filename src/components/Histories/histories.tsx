@@ -13,7 +13,21 @@ interface historiesProps {
     tomatoes:any
 }
 
-class Histories extends React.Component<historiesProps> {
+interface historiesState {
+    staDisPlay:string,
+    tomatoDisPlay:string,
+    todoDisPlay:string
+}
+
+class Histories extends React.Component<historiesProps, historiesState> {
+    constructor(props: Readonly<historiesProps>){
+        super(props)
+        this.state = {
+            staDisPlay:'none',
+            tomatoDisPlay:'none',
+            todoDisPlay:'none'
+        }
+    }
     
     get finishedTodos (){
         return this.props.todos.filter((t:any) => t.completed && !t.deleted)
@@ -35,17 +49,66 @@ class Histories extends React.Component<historiesProps> {
         })
     }
 
+
+    toggleStatistic = () => {
+        if(this.state.staDisPlay === 'block'){
+            this.setState({
+                tomatoDisPlay: 'none',
+                staDisPlay: 'none',
+                todoDisPlay: 'none'
+            })
+        }else{
+            this.setState({
+                tomatoDisPlay: 'none',
+                staDisPlay: 'block',
+                todoDisPlay: 'none'
+            })
+        }
+    }
+
+    toggoleTomato = () => {
+        if (this.state.tomatoDisPlay === 'block') {
+            this.setState({
+                tomatoDisPlay: 'none',
+                staDisPlay: 'none',
+                todoDisPlay: 'none'
+            })
+        } else {
+            this.setState({
+                tomatoDisPlay: 'block',
+                staDisPlay: 'none',
+                todoDisPlay: 'none'
+            })
+        }
+    }
+
+    toggoleTodo = () => {
+        if (this.state.todoDisPlay === 'block') {
+            this.setState({
+                tomatoDisPlay: 'none',
+                staDisPlay: 'none',
+                todoDisPlay: 'none'
+            })
+        } else {
+            this.setState({
+                tomatoDisPlay: 'none',
+                staDisPlay: 'none',
+                todoDisPlay: 'block'
+            })
+        }
+    }
+
     render () {
         return (
             <div className="Histories" id="Histories">
                 <ul>
-                    <li>
+                    <li onClick={this.toggleStatistic}>
                         <div className="gragh">
                             <div className="title">统计</div>
                         </div>
                     </li>
-                    <li>
-                        <div className="gragh">
+                    <li onClick={this.toggoleTomato}>
+                        <div className="gragh" >
                             <div className="title">番茄历史</div>
                             <span className="textTitle">累计完成番茄</span>
                             <span className="number">{this.finishedTomatoes.length}</span>
@@ -53,8 +116,8 @@ class Histories extends React.Component<historiesProps> {
                         <Polygon data={this.tomatoData}
                             totalFinishedCount={this.finishedTomatoes.length} />
                     </li>
-                    <li>
-                        <div className="gragh">
+                    <li onClick={this.toggoleTodo}>
+                        <div className="gragh" >
                             <div className="title">任务历史</div>
                             <span className="textTitle">累计完成任务</span>
                             <span className="number">{this.finishedTodos.length}</span>
@@ -63,9 +126,15 @@ class Histories extends React.Component<historiesProps> {
                             totalFinishedCount={this.finishedTodos.length} />
                     </li>
                 </ul>
-                {<Statistics />}
-                {/* <TomatoHistory/> */}
-                {/* <TodoHistory /> */}
+                <div style={{display:this.state.staDisPlay}}>
+                    <Statistics />
+                </div>
+                <div style={{ display: this.state.tomatoDisPlay }}>
+                    <TomatoHistory />
+                </div>
+                <div style={{ display: this.state.todoDisPlay }}>
+                    <TodoHistory />
+                </div>
             </div>
         )
     }

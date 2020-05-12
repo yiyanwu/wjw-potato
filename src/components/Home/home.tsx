@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {  Menu, Dropdown } from 'antd'
-import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
+import { DownOutlined, LogoutOutlined, CopyrightCircleOutlined} from '@ant-design/icons';
 import axios from '../../config/axios'
 import { connect} from 'react-redux'
 import { initTodos } from '../../redux/actions/todos'
@@ -67,7 +67,7 @@ class Home extends React.Component<any, indexState> {
         return (
             <div className="Home" id="Home">
                 <header>
-                    <span className="Logo">WJW-番茄土豆</span>
+                    <span className="Logo"> WJW-番茄土豆</span>
                     <Dropdown overlay={this.menu} trigger={['click']}>
                         <span className="User">
                             {this.state.user.account} <DownOutlined style={{ marginLeft: 8 }}/>
@@ -81,6 +81,7 @@ class Home extends React.Component<any, indexState> {
                 <div>   
                     <Histories />
                 </div>
+                <footer><CopyrightCircleOutlined /> 吴一晏</footer>
             </div>
         )
     }
