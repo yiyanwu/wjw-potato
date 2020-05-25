@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/wjw-potato/static/css/main.59fd56d6.chunk.css",
-    "main.js": "/wjw-potato/static/js/main.31faac76.chunk.js",
-    "main.js.map": "/wjw-potato/static/js/main.31faac76.chunk.js.map",
+    "main.js": "/wjw-potato/static/js/main.185832c3.chunk.js",
+    "main.js.map": "/wjw-potato/static/js/main.185832c3.chunk.js.map",
     "runtime-main.js": "/wjw-potato/static/js/runtime-main.89a041e4.js",
     "runtime-main.js.map": "/wjw-potato/static/js/runtime-main.89a041e4.js.map",
     "static/css/2.ac55bf83.chunk.css": "/wjw-potato/static/css/2.ac55bf83.chunk.css",
     "static/js/2.d12f5299.chunk.js": "/wjw-potato/static/js/2.d12f5299.chunk.js",
     "static/js/2.d12f5299.chunk.js.map": "/wjw-potato/static/js/2.d12f5299.chunk.js.map",
     "index.html": "/wjw-potato/index.html",
-    "precache-manifest.e4bc86c850ce167108266279c9fc690a.js": "/wjw-potato/precache-manifest.e4bc86c850ce167108266279c9fc690a.js",
+    "precache-manifest.139bd100748c6adadd10a41593d0cbf4.js": "/wjw-potato/precache-manifest.139bd100748c6adadd10a41593d0cbf4.js",
     "service-worker.js": "/wjw-potato/service-worker.js",
     "static/css/2.ac55bf83.chunk.css.map": "/wjw-potato/static/css/2.ac55bf83.chunk.css.map",
     "static/css/main.59fd56d6.chunk.css.map": "/wjw-potato/static/css/main.59fd56d6.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.ac55bf83.chunk.css",
     "static/js/2.d12f5299.chunk.js",
     "static/css/main.59fd56d6.chunk.css",
-    "static/js/main.31faac76.chunk.js"
+    "static/js/main.185832c3.chunk.js"
   ]
 }
