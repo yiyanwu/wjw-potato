@@ -81,7 +81,7 @@ class Home extends React.Component<any, indexState> {
                 <div>   
                     <Histories />
                 </div>
-                <footer><CopyrightCircleOutlined /> <span>©吴一晏</span></footer>
+                <footer><CopyrightCircleOutlined /> <span>吴一晏</span></footer>
             </div>
         )
     }
